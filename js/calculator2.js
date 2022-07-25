@@ -29,33 +29,59 @@ document.querySelector('#num-8').addEventListener('click', onClickNumber);
 document.querySelector('#num-9').addEventListener('click', onClickNumber);
 
 const onClickOperator = (op) => () => {
-  if (numTwo) {
-    switch (operator) {
-      case '+':
-        $result.value = parseInt(numOne) + parseInt(numTwo);
-        break;
-      case '-':
-        $result.value = numOne - numTwo;
-        break;
-      case '*':
-        $result.value = numOne * numTwo;
-        break;
-      case '/':
-        $result.value = numOne / numTwo;
-        break;
-      default:
-        break;
+  if (op === '-') { // op가 -가 들어올때
+    if (!numOne) { //numOne에 값이 없으면
+      numOne += op; // numOne 변수에 -를 저장해라
+      $result.value = op; // $result에 -를 출력해라
+      return;
+    } else if (numOne && !operator){ // numOne에 값이 있거나 operator에 값이 없으면
+      operator = op; // operator변수에 -를 저장해라
+      $operator.value = op; //$operator에 -를 출력해라
+      return;
     }
-    numOne = $result.value;
-    numTwo = '';
-  }
-  if(numOne) {
-    operator = op;
-    $operator.value = op;
+    if (!numTwo) { // numTwo에 값이 없으면
+      $result.value = ''; // $result값을 비워라
+      numTwo += op; // numTwo 변수에 -를 저장해라
+      $result.value = op; // $result에 -를 출력해라
+      return;
+    }
   } else {
-    alert('숫자를 먼저 입력하세요.')
-  }
-}
+    if (numOne) { // numOne에 값이 있으면
+      operator = op; // operator에 -를 넣어라
+      $operator.value = op; //$operator에 -를 출력해라
+    } else {
+      alert('숫자를 먼저 입력하세요.');
+    } 
+  }}
+
+// const onClickOperator = (op) => () => {
+//   if (numTwo) {
+//     switch (operator) {
+//       case '+':
+//         $result.value = parseInt(numOne) + parseInt(numTwo);
+//         break;
+//       case '-':
+//         $result.value = numOne - numTwo;
+//         break;
+//       case '*':
+//         $result.value = numOne * numTwo;
+//         break;
+//       case '/':
+//         $result.value = numOne / numTwo;
+//         break;
+//       default:
+//         break;
+//     }
+//     numOne = $result.value;
+//     numTwo = '';
+//   }
+//   if(numOne) {
+//     operator = op;
+//     $operator.value = op;
+//   } else {
+//     alert('숫자를 먼저 입력하세요.')
+//   }
+// }
 document.querySelector('#plus').addEventListener('click', onClickOperator('+'));
 document.querySelector('#minus').addEventListener('click', onClickOperator('-'));
 document.querySelector('#divide').addEventListener('click', onClickOperator('/'));
